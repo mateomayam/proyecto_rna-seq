@@ -1,15 +1,65 @@
-# Footnotes and citations 
+# Filtrado de los datos. 
 
-## Footnotes
+Calcularemos la proporción de lecturas asignadas a genes. 
 
-Footnotes are put inside the square brackets after a caret `^[]`. Like this one ^[This is a footnote.]. 
+```{r filtrado1}
 
-## Citations
+# Proporción de lecturas asignadas a genes. 
+rse_gene_SRP115956$assigned_gene_prop <- rse_gene_SRP115956$recount_qc.gene_fc_count_all.assigned/rse_gene_SRP115956$recount_qc.gene_fc_count_all.total
+```
 
-Reference items in your bibliography file(s) using `@key`.
+Y observamos las estadísticas de la variable categórica `age<-group`
+```{r filtrado2}
+# Resumen por grupo de edad.
+with(colData(rse_gene_SRP115956), tapply(assigned_gene_prop, age_group, summary))
+```
 
-For example, we are using the **bookdown** package [@R-bookdown] (check out the last code chunk in index.Rmd to see how this citation key was added) in this sample book, which was built on top of R Markdown and **knitr** [@xie2015] (this citation was added manually in an external file book.bib). 
-Note that the `.bib` files need to be listed in the index.Rmd with the YAML `bibliography` key.
+Además, resulta útil observar de manera gráfica cómo se comporta la medida de lecturas asignadas a genes. 
+```{r filtrado3}
+# Visualización.
+with(colData(rse_gene_SRP115956), plot(assigned_gene_prop, sra_attribute.rin))
+abline(v=0.35,col="deepskyblue4", lwd=4, lty = "solid")
+
+```
 
 
-The RStudio Visual Markdown Editor can also make it easier to insert citations: <https://rstudio.github.io/visual-markdown-editing/#/citations>
+```{r flitrado4}
+hist(rse_gene_SRP115956$assigned_gene_prop, col="gray58")
+abline(v=0.35,col="darkorange1", lwd=7, lty = "dashed")
+```
+
+
+Después de haber observado un poco el comportamiento de los datos, podemos elegir un valor de corte.
+
+```{r filtrado5}
+table(rse_gene_SRP115956$assigned_gene_prop < 0.35)
+```
+
+Para este estudio, eliminaremos las muestras que tengan una proporción menor a 0.35
+```{r filtrado6}
+# Pero antes podemos guardar el objeto original, por si posteriormente fuera necesario. 
+rse_gene_SRP115956_unfiltered <- rse_gene_SRP115956
+
+# Eliminar los genes con proporciones bajas. 
+rse_gene_SRP115956 <- rse_gene_SRP115956[, rse_gene_SRP115956$assigned_gene_prop > 0.35]
+
+```
+
+Ahora calcularemos los niveles medios de expresión de los genes en las muestras y eliminaremos los genes con niveles muy bajos, que no son significativos. 
+```{r filtrado7}
+gene_means <- rowMeans(assay(rse_gene_SRP115956, "counts"))
+summary(gene_means)
+
+# Eliminamos genes poco significativos (abajo del primer cuartil).
+rse_gene_SRP115956 <- rse_gene_SRP115956[gene_means > 0.2, ]
+
+# Dimensiones finales. 
+dim (rse_gene_SRP115956)
+```
+
+Las dimensiones originales del objeto eran de 63,856 genes y 263 muestras. Así que después de filtrar los datos eliminamos **16,789 genes y 30 muestras** y conservamos el **73.57** de los genes. 
+```{r filtrado8}
+# Porcentaje de genes retenidos.
+round(nrow(rse_gene_SRP115956) / nrow(rse_gene_SRP115956_unfiltered) * 100, 2)
+```
+
