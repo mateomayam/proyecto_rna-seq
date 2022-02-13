@@ -1,0 +1,9 @@
+# Librerías a utilizar 
+
+```{r librerias, message=FALSE, warning=FALSE}
+library("recount3")
+library("edgeR")
+library("limma")
+library("ggplot2")
+library("pheatmap")
+```
