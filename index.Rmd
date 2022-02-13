@@ -1,55 +1,22 @@
 --- 
-title: "A Minimal Book Example"
-author: "John Doe"
-date: "`r Sys.Date()`"
+title: "Proyecto RNA-seq 2022"
+author: "Mateo Maya Martínez."
+date: "14 - febrero - 2021"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
-# url: your book url like https://bookdown.org/yihui/bookdown
-# cover-image: path to the social sharing image like images/cover.jpg
-description: |
-  This is a minimal example of using the bookdown package to write a book.
-  The HTML output format for this example is bookdown::gitbook,
-  set in the _output.yml file.
 link-citations: yes
-github-repo: rstudio/bookdown-demo
 ---
 
-# About
+# Sobre el proyecto{-}
+Este proyecto busca poner en práctica los conocimientos adquiridos durante el módulo *Análisis de datos de secuenciación masiva* del curso *Bioinformática y estadística II*.
 
-This is a _sample_ book written in **Markdown**. You can use anything that Pandoc's Markdown supports; for example, a math equation $a^2 + b^2 = c^2$.
 
-## Usage 
+## Estudio seleccionado: SRP112551 {-}
 
-Each **bookdown** chapter is an .Rmd file, and each .Rmd file can contain one (and only one) chapter. A chapter *must* start with a first-level heading: `# A good chapter`, and can contain one (and only one) first-level heading.
+Los datos utilizados para este proyecto fueron obtenidos del estudio [Whole-transcriptome brain expression and exon-usage profiling in major depression and suicide](https://www.nature.com/articles/mp2016130).  
+**Abstract**: “Brain gene expression profiling studies of suicide and depression using oligonucleotide microarrays have often failed to distinguish these two phenotypes. Moreover, next generation sequencing approaches are more accurate in quantifying gene expression and can detect alternative splicing. Using RNA-seq, we examined whole-exome gene and exon expression in non-psychiatric controls (CON, N=29), DSM-IV major depressive disorder suicides (MDD-S, N=21) and MDD non-suicides (MDD, N=9) in the dorsal lateral prefrontal cortex (Brodmann Area 9) of sudden death medication-free individuals post mortem. Using small RNA-seq, we also examined miRNA expression (nine samples per group). DeSeq2 identified 35 genes differentially expressed between groups and surviving adjustment for false discovery rate (adjusted P<0.1). In depression, altered genes include humanin-like-8 (MTRNRL8), interleukin-8 (IL8), and serpin peptidase inhibitor, clade H (SERPINH1) and chemokine ligand 4 (CCL4), while exploratory gene ontology (GO) analyses revealed lower expression of immune-related pathways such as chemokine receptor activity, chemotaxis and cytokine biosynthesis, and angiogenesis and vascular development in (adjusted P<0.1). Hypothesis-driven GO analysis suggests lower expression of genes involved in oligodendrocyte differentiation, regulation of glutamatergic neurotransmission, and oxytocin receptor expression in both suicide and depression, and provisional evidence for altered DNA-dependent ATPase expression in suicide only. DEXSEq analysis identified differential exon usage in ATPase, class II, type 9B (adjusted P<0.1) in depression. Differences in miRNA expression or structural gene variants were not detected. Results lend further support for models in which deficits in microglial, endothelial (blood-brain barrier), ATPase activity and astrocytic cell functions contribute to MDD and suicide, and identify putative pathways and mechanisms for further study in these disorder Overall design: We examined whole-exome gene and exon expression in non-psychiatric controls (CON, N=29), DSM-IV major depressive disorder suicides (MDD-S, N=21) and MDD non-suicides (MDD, N=9) in the dorsal lateral prefrontal cortex (Brodmann Area 9) of sudden death medication-free individuals post mortem. Using small RNA-seq, we also examined miRNA expression (nine samples per group).
 
-Use second-level and higher headings within chapters like: `## A short section` or `### An even shorter section`.
-
-The `index.Rmd` file is required, and is also your first book chapter. It will be the homepage when you render the book.
-
-## Render book
-
-You can render the HTML version of this example book without changing anything:
-
-1. Find the **Build** pane in the RStudio IDE, and
-
-1. Click on **Build Book**, then select your output format, or select "All formats" if you'd like to use multiple formats from the same book source files.
-
-Or build the book from the R console:
-
-```{r, eval=FALSE}
-bookdown::render_book()
-```
-
-To render this example to PDF as a `bookdown::pdf_book`, you'll need to install XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <https://yihui.org/tinytex/>.
-
-## Preview book
-
-As you work, you may start a local server to live preview this HTML book. This preview will update as you edit the book when you save individual .Rmd files. You can start the server in a work session by using the RStudio add-in "Preview book", or from the R console:
-
-```{r eval=FALSE}
-bookdown::serve_book()
-```
 
 
 ```{r include=FALSE}
