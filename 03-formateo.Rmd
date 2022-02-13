@@ -50,6 +50,7 @@ summary(as.data.frame(colData(rse_gene_SRP115956)[
 ]))
 ```
 
+## Variable categórica.
 
 Ahora que los datos son manejables, crearemos una variable categórica para dividir dos grupos de edad. 
 ```{r formato 6}
