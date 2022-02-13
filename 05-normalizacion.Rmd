@@ -1,0 +1,12 @@
+# Normalización.
+
+Para reducir la incidencia de falsos positivos normalizaremos los datos asumiendo que la mayoría de los genes no se están expresando diferencialmente. 
+```{r norm1}
+
+dge <- DGEList(
+  counts = assay(rse_gene_SRP115956, "counts"),
+  genes = rowData(rse_gene_SRP115956)
+)
+
+dge <- calcNormFactors(dge)
+```
