@@ -1,31 +1,115 @@
-# Sharing your book
+# Expresión diferencial. 
 
-## Publishing
+Para visualizar un poco los datos, se graficaron boxplots de algunas de los diferentes atributos, como el fenotipo y el grupo de edad, para analizar la diferencia entre la expresión de las muestras bajo distintas condiciones. Sin embargo, no se observaron diferencias muy significativas con este tipo de gráficas.
 
-HTML books can be published online, see: https://bookdown.org/yihui/bookdown/publishing.html
+```{r boxplot1}
+# Boxplot por grupo de edad
 
-## 404 pages
+ggplot(as.data.frame(colData(rse_gene_SRP115956)), aes(y = assigned_gene_prop, x = age_group)) +
+  geom_boxplot() +
+  theme_bw(base_size = 20) +
+  ylab("Assigned Gene Prop") +
+  xlab("Age Group")
+```
 
-By default, users will be directed to a 404 page if they try to access a webpage that cannot be found. If you'd like to customize your 404 page instead of using the default, you may add either a `_404.Rmd` or `_404.md` file to your project root and use code and/or Markdown syntax.
+```{r boxplot2}
+# Boxplot por fenotipo
 
-## Metadata for sharing
+ggplot(as.data.frame(colData(rse_gene_SRP115956)), aes(y = assigned_gene_prop, x = rse_gene_SRP115956$sra_attribute.phenotype)) +
+  geom_boxplot() +
+  theme_bw(base_size = 20) +
+  ylab("Assigned Gene Prop") +
+  xlab("Phenotype")
+```
 
-Bookdown HTML books will provide HTML metadata for social sharing on platforms like Twitter, Facebook, and LinkedIn, using information you provide in the `index.Rmd` YAML. To setup, set the `url` for your book and the path to your `cover-image` file. Your book's `title` and `description` are also used.
+```{r boxplot3}
+# Boxplot por género
 
+ggplot(as.data.frame(colData(rse_gene_SRP115956)), aes(y = assigned_gene_prop, x = rse_gene_SRP115956$sra_attribute.gender)) +
+  geom_boxplot() +
+  theme_bw(base_size = 20) +
+  ylab("Assigned Gene Prop") +
+  xlab("Gender")
+```
 
+## Modelo estadístico.
 
-This `gitbook` uses the same social sharing data across all chapters in your book- all links shared will look the same.
+El modelo estadístico se generó a partir de las tres variables anteriormente mencionadas. 
+```{r modelo1}
+mod <- model.matrix(~ age_group + sra_attribute.gender + sra_attribute.phenotype + assigned_gene_prop, data = colData(rse_gene_SRP115956))
+colnames(mod)
+```
 
-Specify your book's source repository on GitHub using the `edit` key under the configuration options in the `_output.yml` file, which allows users to suggest an edit by linking to a chapter's source file. 
+Ler qué es lo que grafica la función voom.
+```{r modelo2}
+vGene <- voom(dge, mod, plot = TRUE)
+```
 
-Read more about the features of this output format here:
+```{r modelo3}
+eb_results <- eBayes(lmFit(vGene))
+plotMA(eb_results, coef = 4, col = "steelblue")
+```
 
-https://pkgs.rstudio.com/bookdown/reference/gitbook.html
+```{r modelo4}
+de_results <- topTable(
+  eb_results,
+  coef = 2,
+  number = nrow(rse_gene_SRP115956),
+  sort.by = "none"
+)
+dim(de_results)
 
-Or use:
+volcanoplot(eb_results, coef = 4, highlight = 5, names = de_results$gene_name, col = "steelblue", hl.col="hotpink4")
+```
 
-```{r eval=FALSE}
-?bookdown::gitbook
+Siguiendo con el análisis, se observó si se generaban clusters de expresión diferencial. Esto se consiguió a partir de gráficas MDS en las que visualizamos la agrupación de muestras de acuerdo a los valores  y los niveles de expresión de las variables elegidas.De igual manera, se graficaron los atributos grupo de edad, fenotipo y género . 
+
+```{r MDS1}
+## Crear un data frame con las variables de nuestro interés y nombrarlas más amigablemente. 
+df <- as.data.frame(colData(rse_gene_SRP115956)[, c("age_group", "sra_attribute.gender", "sra_attribute.phenotype")])
+colnames(df) <- c("AgeGroup", "Gender", "Phenotype")
+
+# MDS por edad
+age.group <- df$AgeGroup
+levels(age.group) <- c("turquoise3", "deeppink4")
+age.group <- as.character(age.group)
+plotMDS(vGene$E, labels = df$AgeGroup, col = age.group)
+```
+
+```{r MDS2}
+# MDS por fenotipo
+phenotype.group <- df$Phenotype
+levels(phenotype.group) <- c("dodgerblue4", "darkgoldenrod1")
+phenotype.group <- as.character(phenotype.group)
+plotMDS(vGene$E, labels = df$Phenotype, col = phenotype.group)
 ```
 
 
+```{r MDS3}
+# MDS por género. 
+gender.group <- df$Gender
+levels(gender.group) <- c("violetred4", "tan1")
+gender.group <- as.character(gender.group)
+plotMDS(vGene$E, labels = df$Gender, col = gender.group)
+```
+
+
+Por último podemos observar en una gráfica de tipo heatmap la expresión de los genes a lo largo de los atributos que se consideraron para generar el modelo. 
+
+```{r heatmap}
+# Nos quedamos con los genes de más significativos.
+exprs_heatmap <- vGene$E[rank(de_results$adj.P.Val) <= 30, ]
+
+# Cambiar los identificadores por los nombres de los genes. 
+nombres <- rownames(de_results)
+rownames(exprs_heatmap) <- de_results$gene_name[match(rownames(exprs_heatmap), nombres)]
+
+pheatmap(
+  exprs_heatmap,
+  cluster_rows = TRUE,
+  cluster_cols = TRUE,
+  show_rownames = TRUE,
+  show_colnames = FALSE,
+  annotation_col = df
+)
+```
