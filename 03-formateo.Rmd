@@ -1,12 +1,64 @@
-# Parts
+# Formateo de los datos. 
 
-You can add parts to organize one or more book chapters together. Parts can be inserted at the top of an .Rmd file, before the first-level chapter heading in that same file. 
+Podemos observar los atributos que contiene nuestro objeto ahora. 
+```{r formato1}
+head(rse_gene_SRP115956$sra.sample_attributes, 3)
+```
 
-Add a numbered part: `# (PART) Act one {-}` (followed by `# A chapter`)
+Una vez hecho lo anterior, podemos observar que hay varios atributos que contienen espacios en su nombre, si quisiéramos usarlos en el análisis posterior podrían ocasionar algunos problemas, así que los quitaremos. 
+```{r formato2}
+# Reemplazar espacios que podrían ocasionar problemas en varios atributos. 
+rse_gene_SRP115956$sra.sample_attributes <- gsub("alcool", "alcohol", rse_gene_SRP115956$sra.sample_attributes)
+rse_gene_SRP115956$sra.sample_attributes <- gsub("Cause of death", "cause_of_death", rse_gene_SRP115956$sra.sample_attributes)
+rse_gene_SRP115956$sra.sample_attributes <- gsub("drug type", "drug_type", rse_gene_SRP115956$sra.sample_attributes)
+rse_gene_SRP115956$sra.sample_attributes <- gsub("medication type", "medication_type", rse_gene_SRP115956$sra.sample_attributes)
 
-Add an unnumbered part: `# (PART\*) Act one {-}` (followed by `# A chapter`)
+# Observar los atributos
+rse_gene_SRP115956$sra.sample_attributes [1]
+```
 
-Add an appendix as a special kind of un-numbered part: `# (APPENDIX) Other stuff {-}` (followed by `# A chapter`). Chapters in an appendix are prepended with letters instead of numbers.
+
+Ahora separaremos los objetos y los añadiremos al data frame. 
+```{r formato3}
+# Procesar la información como la provee SRA, expandirla, separar los atributos e incorporarlos al data frame. . 
+rse_gene_SRP115956 <- expand_sra_attributes(rse_gene_SRP115956)
+
+colData(rse_gene_SRP115956)[
+  ,
+  grepl("^sra_attribute", colnames(colData(rse_gene_SRP115956)))
+]
+```
+
+Si quisiéramos utilizar algunos de estos atributos, para el análisis posterior, sería conveniente que la información que contienen sea homogénea, así que en los atributos que lo necesiten, se realizarán cambios que lo permitan. 
+```{r formato4}
+# Homegeneizar los datos. 
+rse_gene_SRP115956$sra_attribute.drugs <- gsub("No", "no", rse_gene_SRP115956$sra_attribute.drugs)
+rse_gene_SRP115956$sra_attribute.alcohol <- gsub("No", "no", rse_gene_SRP115956$sra_attribute.alcohol)
+```
+
+Modificaremos los tipos de datos de algunas categorías para poder utilizarlos
+```{r formato5}
+# Cambiar el tipo de dato de character a factor o numeric.
+rse_gene_SRP115956$sra_attribute.age <- as.numeric(rse_gene_SRP115956$sra_attribute.age)
+rse_gene_SRP115956$sra_attribute.phenotype <- factor(rse_gene_SRP115956$sra_attribute.phenotype)
+rse_gene_SRP115956$sra_attribute.gender <- factor(rse_gene_SRP115956$sra_attribute.gender)
+
+# Resumen de las categorías. 
+summary(as.data.frame(colData(rse_gene_SRP115956)[
+  ,
+  grepl("^sra_attribute.[age|phenotype]", colnames(colData(rse_gene_SRP115956)))
+]))
+```
+
+
+Ahora que los datos son manejables, crearemos una variable categórica para dividir dos grupos de edad. 
+```{r formato 6}
+# Separar los grupos de edad
+rse_gene_SRP115956$age_group <- factor(ifelse(rse_gene_SRP115956$sra_attribute.age< 56, "young", "old"))
+
+# Encontrar diferencias
+table(rse_gene_SRP115956$age_group)
+```
 
 
 
