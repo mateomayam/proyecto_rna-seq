@@ -1,3 +1,5 @@
-`r if (knitr::is_html_output()) '
-# References {-}
-'`
+# Conclusiones. 
+
+A lo largo del proyecto hubo que manipular los datos que componían al estudio, pasando por etapas de obtención, limpieza, transformación, visualización y modelaje. Conforme avanzaba en el desarrollo buscaba mejorar la calidad de la información. Cada una de las etapas es igual de importante que la anterior. Esperaba encontrar una dieferencia un poco más evidente al analizar la categoría de grupos de edad. 
+
+Las librerías son muy amigables y fueron una muy buena primera experiencia en el msnejo de datos de expresión diferencial. Estoy convencido de que este es solo el inicio del camino y me gustaría seguir aprendiendoy desarrollando más habilidades para el análisis de expresión diferencial. 
