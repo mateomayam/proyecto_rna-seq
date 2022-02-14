@@ -1,6 +1,6 @@
 # Expresión diferencial. 
 
-Para visualizar un poco los datos, se graficaron boxplots de algunas de los diferentes atributos, como el fenotipo y el grupo de edad, para analizar la diferencia entre la expresión de las muestras bajo distintas condiciones. Sin embargo, no se observaron diferencias muy significativas con este tipo de gráficas.
+Para visualizar un poco los datos, se graficaron boxplots de algunas de los diferentes atributos, como el fenotipo y el grupo de edad, para analizar la diferencia entre la expresión de las muestras bajo distintas condiciones. Sin embargo, no se observaron diferencias muy significativas con este tipo de gráficas.  
 
 ```{r boxplot1}
 # Boxplot por grupo de edad
@@ -31,17 +31,17 @@ ggplot(as.data.frame(colData(rse_gene_SRP115956)), aes(y = assigned_gene_prop, x
 
 ## Modelo estadístico.
 
-El modelo estadístico se generó a partir de las tres variables anteriormente mencionadas. 
+El modelo estadístico se generó a partir de las tres variables anteriormente mencionadas.   
 ```{r modelo1}
 mod <- model.matrix(~ age_group + sra_attribute.gender + sra_attribute.phenotype + assigned_gene_prop, data = colData(rse_gene_SRP115956))
 colnames(mod)
 ```
 
-Convertimos las lecturas de las cuentas a logaritmo base 2 de las cuentas por millón. Posteriormente estimamos la relación varianza-promedio. 
+Convertimos las lecturas de las cuentas a logaritmo base 2 de las cuentas por millón. Posteriormente estimamos la relación varianza-promedio.   
 ```{r modelo2}
 vGene <- voom(dge, mod, plot = TRUE)
 ```
-Ajustamos los datos evaluando de acuerdo al atributo `phenotype` y podemos visualizar los datos estadísticos. 
+Ajustamos los datos evaluando de acuerdo al atributo `phenotype` y podemos visualizar los datos estadísticos.   
 
 ```{r modelo3}
 # Ajuste de los datos
@@ -61,9 +61,9 @@ dim(de_results)
 
 volcanoplot(eb_results, coef = 4, highlight = 5, names = de_results$gene_name, col = "steelblue", hl.col="hotpink4")
 ```
-En este último plot podemos observar los cinco genes con mayor expresión cuando el diagnóstico es Major Depressive Disorder están alejados de los demás, lo que nos da un indicativo de la expresión diferencial. 
+En este último plot podemos observar los cinco genes con mayor expresión cuando el diagnóstico es Major Depressive Disorder están alejados de los demás, lo que nos da un indicativo de la expresión diferencial.   
 
-Siguiendo con el análisis, se observó si se generaban clusters de expresión diferencial dependiendo de la categoría de las muestras. Esto se consiguió a partir de gráficas MDS en las que visualizamos la agrupación de muestras de acuerdo a los valores  y los niveles de expresión de las variables elegidas.De igual manera, se graficaron los atributos grupo de edad, fenotipo y género. 
+Siguiendo con el análisis, se observó si se generaban clusters de expresión diferencial dependiendo de la categoría de las muestras. Esto se consiguió a partir de gráficas MDS en las que visualizamos la agrupación de muestras de acuerdo a los valores  y los niveles de expresión de las variables elegidas.De igual manera, se graficaron los atributos grupo de edad, fenotipo y género.   
 
 ```{r MDS1}
 ## Crear un data frame con las variables de nuestro interés y nombrarlas más amigablemente. 
@@ -95,9 +95,9 @@ gender.group <- as.character(gender.group)
 plotMDS(vGene$E, labels = df$Gender, col = gender.group)
 ```
 
-La más informativa de estas gráficas es la que analiza la categoría de sexo. Podemos ver dos clusters en el caso de hombres y mujeres vemos que hay una gran diferencia en los genes diferencialmente expresados. 
+La más informativa de estas gráficas es la que analiza la categoría de sexo. Podemos ver dos clusters en el caso de hombres y mujeres vemos que hay una gran diferencia en los genes diferencialmente expresados.   
 
-Por último podemos observar en una gráfica de tipo heatmap la expresión de los genes a lo largo de los atributos que se consideraron para generar el modelo. 
+Por último podemos observar en una gráfica de tipo heatmap la expresión de los genes a lo largo de los atributos que se consideraron para generar el modelo.   
 
 ```{r heatmap}
 # Nos quedamos con los genes de más significativos.
