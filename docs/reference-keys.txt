@@ -1,0 +1,8 @@
+librerías-a-utilizar
+datos-a-utilizar.
+formateo-de-los-datos.
+variable-categórica.
+filtrado-de-los-datos.
+normalización.
+expresión-diferencial.
+modelo-estadístico.

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3 Formateo de los datos. | Proyecto RNA-seq 2022</title>
+  <meta name="description" content="3 Formateo de los datos. | Proyecto RNA-seq 2022" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3 Formateo de los datos. | Proyecto RNA-seq 2022" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3 Formateo de los datos. | Proyecto RNA-seq 2022" />
+  
+  
+  
+
+<meta name="author" content="Mateo Maya Martínez." />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="datos-a-utilizar..html"/>
+<link rel="next" href="filtrado-de-los-datos..html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Sobre el proyecto</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#estudio-seleccionado-srp112551"><i class="fa fa-check"></i>Estudio seleccionado: SRP112551</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="librerías-a-utilizar.html"><a href="librerías-a-utilizar.html"><i class="fa fa-check"></i><b>1</b> Librerías a utilizar</a></li>
+<li class="chapter" data-level="2" data-path="datos-a-utilizar..html"><a href="datos-a-utilizar..html"><i class="fa fa-check"></i><b>2</b> Datos a utilizar.</a></li>
+<li class="chapter" data-level="3" data-path="formateo-de-los-datos..html"><a href="formateo-de-los-datos..html"><i class="fa fa-check"></i><b>3</b> Formateo de los datos.</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="formateo-de-los-datos..html"><a href="formateo-de-los-datos..html#variable-categórica."><i class="fa fa-check"></i><b>3.1</b> Variable categórica.</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="filtrado-de-los-datos..html"><a href="filtrado-de-los-datos..html"><i class="fa fa-check"></i><b>4</b> Filtrado de los datos.</a></li>
+<li class="chapter" data-level="5" data-path="normalización..html"><a href="normalización..html"><i class="fa fa-check"></i><b>5</b> Normalización.</a></li>
+<li class="chapter" data-level="6" data-path="expresión-diferencial..html"><a href="expresión-diferencial..html"><i class="fa fa-check"></i><b>6</b> Expresión diferencial.</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="expresión-diferencial..html"><a href="expresión-diferencial..html#modelo-estadístico."><i class="fa fa-check"></i><b>6.1</b> Modelo estadístico.</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Proyecto RNA-seq 2022</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="formateo-de-los-datos." class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Formateo de los datos.</h1>
+<p>Podemos observar los atributos que contiene nuestro objeto ahora.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="formateo-de-los-datos..html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(rse_gene_SRP115956<span class="sc">$</span>sra.sample_attributes, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;age;;44|alcool;;NA|Cause of death;;Suicide|drug type;;NA|drugs;;NA|gender;;female|medication type;;AD|medication;;yes|ph;;6.73|phenotype;;CTRL|pmi;;29.5|rin;;7.3|smoking;;NA|source_name;;postmortem brain|tissue;;Orbitofrontal (OFC; BA11)&quot;    
+## [2] &quot;age;;29|alcool;;no|Cause of death;;Suicide|drug type;;no|drugs;;no|gender;;male|medication type;;no|medication;;no|ph;;6.96|phenotype;;MDD|pmi;;27|rin;;5.7|smoking;;yes (heavy)|source_name;;postmortem brain|tissue;;Orbitofrontal (OFC; BA11)&quot; 
+## [3] &quot;age;;68|alcool;;yes|Cause of death;;Suicide|drug type;;no|drugs;;no|gender;;male|medication type;;NA|medication;;NA|ph;;6.93|phenotype;;MDD|pmi;;32|rin;;8.8|smoking;;yes (heavy)|source_name;;postmortem brain|tissue;;Orbitofrontal (OFC; BA11)&quot;</code></pre>
+<p>Una vez hecho lo anterior, podemos observar que hay varios atributos que contienen espacios en su nombre, si quisiéramos usarlos en el análisis posterior podrían ocasionar algunos problemas, así que los quitaremos.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="formateo-de-los-datos..html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reemplazar espacios que podrían ocasionar problemas en varios atributos. </span></span>
+<span id="cb6-2"><a href="formateo-de-los-datos..html#cb6-2" aria-hidden="true" tabindex="-1"></a>rse_gene_SRP115956<span class="sc">$</span>sra.sample_attributes <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;alcool&quot;</span>, <span class="st">&quot;alcohol&quot;</span>, rse_gene_SRP115956<span class="sc">$</span>sra.sample_attributes)</span>
+<span id="cb6-3"><a href="formateo-de-los-datos..html#cb6-3" aria-hidden="true" tabindex="-1"></a>rse_gene_SRP115956<span class="sc">$</span>sra.sample_attributes <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;Cause of death&quot;</span>, <span class="st">&quot;cause_of_death&quot;</span>, rse_gene_SRP115956<span class="sc">$</span>sra.sample_attributes)</span>
+<span id="cb6-4"><a href="formateo-de-los-datos..html#cb6-4" aria-hidden="true" tabindex="-1"></a>rse_gene_SRP115956<span class="sc">$</span>sra.sample_attributes <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;drug type&quot;</span>, <span class="st">&quot;drug_type&quot;</span>, rse_gene_SRP115956<span class="sc">$</span>sra.sample_attributes)</span>
+<span id="cb6-5"><a href="formateo-de-los-datos..html#cb6-5" aria-hidden="true" tabindex="-1"></a>rse_gene_SRP115956<span class="sc">$</span>sra.sample_attributes <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;medication type&quot;</span>, <span class="st">&quot;medication_type&quot;</span>, rse_gene_SRP115956<span class="sc">$</span>sra.sample_attributes)</span>
+<span id="cb6-6"><a href="formateo-de-los-datos..html#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="formateo-de-los-datos..html#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Observar los atributos</span></span>
+<span id="cb6-8"><a href="formateo-de-los-datos..html#cb6-8" aria-hidden="true" tabindex="-1"></a>rse_gene_SRP115956<span class="sc">$</span>sra.sample_attributes [<span class="dv">1</span>]</span></code></pre></div>
+<pre><code>## [1] &quot;age;;44|alcohol;;NA|cause_of_death;;Suicide|drug_type;;NA|drugs;;NA|gender;;female|medication_type;;AD|medication;;yes|ph;;6.73|phenotype;;CTRL|pmi;;29.5|rin;;7.3|smoking;;NA|source_name;;postmortem brain|tissue;;Orbitofrontal (OFC; BA11)&quot;</code></pre>
+<p>Ahora separaremos los objetos y los añadiremos al data frame.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="formateo-de-los-datos..html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Procesar la información como la provee SRA, expandirla, separar los atributos e incorporarlos al data frame. . </span></span>
+<span id="cb8-2"><a href="formateo-de-los-datos..html#cb8-2" aria-hidden="true" tabindex="-1"></a>rse_gene_SRP115956 <span class="ot">&lt;-</span> <span class="fu">expand_sra_attributes</span>(rse_gene_SRP115956)</span>
+<span id="cb8-3"><a href="formateo-de-los-datos..html#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="formateo-de-los-datos..html#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(rse_gene_SRP115956)[</span>
+<span id="cb8-5"><a href="formateo-de-los-datos..html#cb8-5" aria-hidden="true" tabindex="-1"></a>  ,</span>
+<span id="cb8-6"><a href="formateo-de-los-datos..html#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grepl</span>(<span class="st">&quot;^sra_attribute&quot;</span>, <span class="fu">colnames</span>(<span class="fu">colData</span>(rse_gene_SRP115956)))</span>
+<span id="cb8-7"><a href="formateo-de-los-datos..html#cb8-7" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div>
+<pre><code>## DataFrame with 263 rows and 15 columns
+##            sra_attribute.age sra_attribute.alcohol sra_attribute.cause_of_death
+##                  &lt;character&gt;           &lt;character&gt;                  &lt;character&gt;
+## SRR5961814                44                    NA                      Suicide
+## SRR5961815                29                    no                      Suicide
+## SRR5961816                68                   yes                      Suicide
+## SRR5961817                39                    no                      Suicide
+## SRR5961818                40                    NA                      Suicide
+## ...                      ...                   ...                          ...
+## SRR5961995                53                    no                      Suicide
+## SRR5961996                39                    no                      Suicide
+## SRR5961997                55                   yes                     Accident
+## SRR5961998                38                    NA                      Suicide
+## SRR5961999                25                    NA                      Suicide
+##            sra_attribute.drug_type sra_attribute.drugs sra_attribute.gender
+##                        &lt;character&gt;         &lt;character&gt;          &lt;character&gt;
+## SRR5961814                      NA                  NA               female
+## SRR5961815                      no                  no                 male
+## SRR5961816                      no                  no                 male
+## SRR5961817                      no                  no                 male
+## SRR5961818                      NA                  NA               female
+## ...                            ...                 ...                  ...
+## SRR5961995                      no                  no                 male
+## SRR5961996                      no                  no                 male
+## SRR5961997                      no                  no                 male
+## SRR5961998                      NA                  NA                 male
+## SRR5961999                      NA                  NA               female
+##            sra_attribute.medication_type sra_attribute.medication
+##                              &lt;character&gt;              &lt;character&gt;
+## SRR5961814                            AD                      yes
+## SRR5961815                            no                       no
+## SRR5961816                            NA                       NA
+## SRR5961817                            AD                      yes
+## SRR5961818                            AD                      yes
+## ...                                  ...                      ...
+## SRR5961995                            NA                       NA
+## SRR5961996                            AD                      yes
+## SRR5961997                            no                       no
+## SRR5961998                            NA                       NA
+## SRR5961999                            NA                       NA
+##            sra_attribute.ph sra_attribute.phenotype sra_attribute.pmi
+##                 &lt;character&gt;             &lt;character&gt;       &lt;character&gt;
+## SRR5961814             6.73                    CTRL              29.5
+## SRR5961815             6.96                     MDD                27
+## SRR5961816             6.93                     MDD                32
+## SRR5961817             6.37                     MDD              18.5
+## SRR5961818             6.81                     MDD              49.5
+## ...                     ...                     ...               ...
+## SRR5961995             6.91                     MDD              33.5
+## SRR5961996                6                     MDD                19
+## SRR5961997             6.75                    CTRL                24
+## SRR5961998             6.86                     MDD                30
+## SRR5961999             6.73                     MDD                20
+##            sra_attribute.rin sra_attribute.smoking sra_attribute.source_name
+##                  &lt;character&gt;           &lt;character&gt;               &lt;character&gt;
+## SRR5961814               7.3                    NA          postmortem brain
+## SRR5961815               5.7           yes (heavy)          postmortem brain
+## SRR5961816               8.8           yes (heavy)          postmortem brain
+## SRR5961817               6.8                    no          postmortem brain
+## SRR5961818               7.8                    NA          postmortem brain
+## ...                      ...                   ...                       ...
+## SRR5961995               7.7                    NA          postmortem brain
+## SRR5961996               4.9           yes (heavy)          postmortem brain
+## SRR5961997               4.4                    NA          postmortem brain
+## SRR5961998               7.7                    NA          postmortem brain
+## SRR5961999               8.1                    NA          postmortem brain
+##              sra_attribute.tissue
+##                       &lt;character&gt;
+## SRR5961814 Orbitofrontal (OFC; ..
+## SRR5961815 Orbitofrontal (OFC; ..
+## SRR5961816 Orbitofrontal (OFC; ..
+## SRR5961817 Orbitofrontal (OFC; ..
+## SRR5961818 Orbitofrontal (OFC; ..
+## ...                           ...
+## SRR5961995 Nucleus Accumbens (N..
+## SRR5961996 Nucleus Accumbens (N..
+## SRR5961997 Nucleus Accumbens (N..
+## SRR5961998 Nucleus Accumbens (N..
+## SRR5961999 Nucleus Accumbens (N..</code></pre>
+<p>Si quisiéramos utilizar algunos de estos atributos, para el análisis posterior, sería conveniente que la información que contienen sea homogénea, así que en los atributos que lo necesiten, se realizarán cambios que lo permitan.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="formateo-de-los-datos..html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Homegeneizar los datos. </span></span>
+<span id="cb10-2"><a href="formateo-de-los-datos..html#cb10-2" aria-hidden="true" tabindex="-1"></a>rse_gene_SRP115956<span class="sc">$</span>sra_attribute.drugs <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;No&quot;</span>, <span class="st">&quot;no&quot;</span>, rse_gene_SRP115956<span class="sc">$</span>sra_attribute.drugs)</span>
+<span id="cb10-3"><a href="formateo-de-los-datos..html#cb10-3" aria-hidden="true" tabindex="-1"></a>rse_gene_SRP115956<span class="sc">$</span>sra_attribute.alcohol <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;No&quot;</span>, <span class="st">&quot;no&quot;</span>, rse_gene_SRP115956<span class="sc">$</span>sra_attribute.alcohol)</span></code></pre></div>
+<p>Modificaremos los tipos de datos de algunas categorías para poder utilizarlos</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="formateo-de-los-datos..html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiar el tipo de dato de character a factor o numeric.</span></span>
+<span id="cb11-2"><a href="formateo-de-los-datos..html#cb11-2" aria-hidden="true" tabindex="-1"></a>rse_gene_SRP115956<span class="sc">$</span>sra_attribute.age <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(rse_gene_SRP115956<span class="sc">$</span>sra_attribute.age)</span>
+<span id="cb11-3"><a href="formateo-de-los-datos..html#cb11-3" aria-hidden="true" tabindex="-1"></a>rse_gene_SRP115956<span class="sc">$</span>sra_attribute.phenotype <span class="ot">&lt;-</span> <span class="fu">factor</span>(rse_gene_SRP115956<span class="sc">$</span>sra_attribute.phenotype)</span>
+<span id="cb11-4"><a href="formateo-de-los-datos..html#cb11-4" aria-hidden="true" tabindex="-1"></a>rse_gene_SRP115956<span class="sc">$</span>sra_attribute.gender <span class="ot">&lt;-</span> <span class="fu">factor</span>(rse_gene_SRP115956<span class="sc">$</span>sra_attribute.gender)</span>
+<span id="cb11-5"><a href="formateo-de-los-datos..html#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="formateo-de-los-datos..html#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Resumen de las categorías. </span></span>
+<span id="cb11-7"><a href="formateo-de-los-datos..html#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">as.data.frame</span>(<span class="fu">colData</span>(rse_gene_SRP115956)[</span>
+<span id="cb11-8"><a href="formateo-de-los-datos..html#cb11-8" aria-hidden="true" tabindex="-1"></a>  ,</span>
+<span id="cb11-9"><a href="formateo-de-los-datos..html#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grepl</span>(<span class="st">&quot;^sra_attribute.[age|phenotype]&quot;</span>, <span class="fu">colnames</span>(<span class="fu">colData</span>(rse_gene_SRP115956)))</span>
+<span id="cb11-10"><a href="formateo-de-los-datos..html#cb11-10" aria-hidden="true" tabindex="-1"></a>]))</span></code></pre></div>
+<pre><code>##  sra_attribute.age sra_attribute.alcohol sra_attribute.gender
+##  Min.   :19.00     Length:263            female:122          
+##  1st Qu.:38.00     Class :character      male  :141          
+##  Median :46.00     Mode  :character                          
+##  Mean   :46.63                                               
+##  3rd Qu.:55.00                                               
+##  Max.   :82.00                                               
+##  sra_attribute.ph   sra_attribute.phenotype sra_attribute.pmi 
+##  Length:263         CTRL:122                Length:263        
+##  Class :character   MDD :141                Class :character  
+##  Mode  :character                           Mode  :character  
+##                                                               
+##                                                               
+##                                                               
+##  sra_attribute.tissue
+##  Length:263          
+##  Class :character    
+##  Mode  :character    
+##                      
+##                      
+## </code></pre>
+<div id="variable-categórica." class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Variable categórica.</h2>
+<p>Ahora que los datos son manejables, crearemos una variable categórica para dividir dos grupos de edad.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="formateo-de-los-datos..html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Separar los grupos de edad</span></span>
+<span id="cb13-2"><a href="formateo-de-los-datos..html#cb13-2" aria-hidden="true" tabindex="-1"></a>rse_gene_SRP115956<span class="sc">$</span>age_group <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">ifelse</span>(rse_gene_SRP115956<span class="sc">$</span>sra_attribute.age<span class="sc">&lt;</span> <span class="dv">56</span>, <span class="st">&quot;young&quot;</span>, <span class="st">&quot;old&quot;</span>))</span>
+<span id="cb13-3"><a href="formateo-de-los-datos..html#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="formateo-de-los-datos..html#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Encontrar diferencias</span></span>
+<span id="cb13-5"><a href="formateo-de-los-datos..html#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(rse_gene_SRP115956<span class="sc">$</span>age_group)</span></code></pre></div>
+<pre><code>## 
+##   old young 
+##    61   202</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="datos-a-utilizar..html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="filtrado-de-los-datos..html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/03-formateo.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["proyecto_rna_seq.pdf", "proyecto_rna_seq.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
